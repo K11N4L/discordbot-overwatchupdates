@@ -1,0 +1,21 @@
+import discord
+from discord.ext import commands
+import requests
+
+# Replace YOUR_TOKEN_HERE with your bot's token
+bot = commands.Bot(command_prefix='!', 
+                   token='YOUR_TOKEN_HERE')
+
+@bot.command()
+async def updates(ctx):
+    # Replace YOUR_API_KEY with your Overwatch 2 API key
+    api_key = 'YOUR_API_KEY'
+    headers = {'Authorization': 'Bearer ' + api_key}
+    url = 'https://ow-api.com/v1/stats/pc/us/YOUR_BATTLENET_ID/profile'
+    # Make a GET request to the Overwatch 2 API
+    response = requests.get(url, headers=headers)
+    data = response.json()
+    # Send the updates to the Discord channel
+    await ctx.send(data)
+
+bot.run()
